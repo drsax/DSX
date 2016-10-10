@@ -233,14 +233,15 @@
 
    <!-- [no.4-1 layer]   -->
 
-    <webaudio-switch id="switch3" style="position:absolute;left:160px;top:550px " src="cont/img/blue.png" value="1" height="50" width="50"></webaudio-switch>
+    <webaudio-switch id="shiftbypass" style="position:absolute;left:160px;top:550px " src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
 
 
 
 
-    <webaudio-knob id="knob1" style=" position:absolute;left :200px;  top: 570px; " src="cont/img/dde.png" value="0" max="2000" step="1" diameter="70" sprites="30"></webaudio-knob>
-    <webaudio-knob id="knob1" style=" position:absolute;left :300px;  top: 570px; " src="cont/img/dde.png" value="0" max="2000" step="1" diameter="70" sprites="30"></webaudio-knob>
-    <webaudio-knob id="knob1" style=" position:absolute;left :400px;  top: 570px; " src="cont/img/dde.png" value="0" max="2000" step="1" diameter="70" sprites="30"></webaudio-knob>
+    <webaudio-knob id="shift1" style=" position:absolute;left :200px;  top: 570px; " src="cont/img/dde.png" value="0" max="1" step="0.1" diameter="70" sprites="30"></webaudio-knob>
+    <webaudio-knob id="shift2" style=" position:absolute;left :280px;  top: 570px; " src="cont/img/dde.png" value="0" max="2" step="0.1" diameter="70" sprites="30"></webaudio-knob>
+    <webaudio-knob id="shift3" style=" position:absolute;left :360px;  top: 570px; " src="cont/img/dde.png" value="0" max="3" step="0.1" diameter="70" sprites="30"></webaudio-knob>
+    <webaudio-knob id="shift4" style=" position:absolute;left :440px;  top: 570px; " src="cont/img/dde.png" value="0" max="4" step="0.1" diameter="70" sprites="30"></webaudio-knob>
 
 
 
@@ -692,12 +693,16 @@ var sax_pan_ =new DSX.valueChange("pann",saxPan.pan);
 saxgain.connect(gain);
 gain.connect(gain2); //eq
 gain2.connect(gain3); //comp
-gain3.connect(gain6); //comp
 
+gain3.connect(gain4); //shift effect
+gain4.connect(gain5);
+
+gain5.connect(gain6);
 gain6.connect(gain7);//delay
 gain7.connect(gain8);//reverb
+
 gain8.connect(mixgain);
-mixgain.connect(saxPan);
+mixgain.connect(saxPan);//saxpan
 saxPan.connect(mainout);
 mainout.connect(DAC); //connet main out
 
@@ -730,6 +735,63 @@ function saa1(){
 sound11.playbackRate =1;
 sound11.play();
 }
+
+//////////////pitchShift//////////////
+
+        var shift_one= new DSX.pitchShift(0.7,1.1);
+        var shift_two= new DSX.pitchShift(0.6,0.8);
+        var shift_tree= new DSX.pitchShift(0.5,0.6);
+        var shift_four= new DSX.pitchShift(0.2,0.4);
+
+        var shiftdelay_one = new DSX.DelayPipe({delayTime:1});
+        var shiftdelay_two = new DSX.DelayPipe({delayTime:2});
+        var shiftdelay_tree = new DSX.DelayPipe({delayTime:3});
+        var shiftdelay_four = new DSX.DelayPipe({delayTime:4});
+     
+   
+
+
+var bypassShift =new DSX.functionChange('shiftbypass',shiftdata); 
+
+function shiftdata(e){
+
+
+ if (e.target.value == "1") {
+    gain4.disconnect(0)
+
+       shift_one.get(gain4);
+        shift_one.connect(shiftdelay_one);
+        shiftdelay_one.connect(gain5);
+   
+        shift_two.get(gain4);
+        shift_two.connect(shiftdelay_two);
+        shiftdelay_two.connect(gain5);
+   
+
+        shift_tree.get(gain4);
+       shift_tree.connect(shiftdelay_tree);
+       shiftdelay_tree.connect(gain5);
+  
+
+        shift_four.get(gain4);
+       shift_four.connect(shiftdelay_four);
+       shiftdelay_four.connect(gain5);
+  
+
+
+        }
+    if (e.target.value == "0") {
+    gain4.disconnect(0)
+    gain4.connect(gain5); //delay reconnect
+
+        }
+
+}
+var shift_one_data_ =new DSX.valueChange("shift1",shiftdelay_one.delayTime); 
+var shift_two_data_ =new DSX.valueChange("shift2",shiftdelay_two.delayTime); 
+var shift_tree_data_ =new DSX.valueChange("shift3",shiftdelay_tree.delayTime); 
+var shift_four_data_ =new DSX.valueChange("shift4",shiftdelay_four.delayTime); 
+
 
 
 
