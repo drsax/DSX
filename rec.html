@@ -1,0 +1,155 @@
+<html>
+
+<head>
+
+<style>
+audio{ width:300px; height:30px; background:black; padding:5px; }
+
+
+</style>
+    <style>
+    
+        
+        ul li {
+            list-style-type: none;
+        }
+        
+        #recordingslist {
+            padding-left: 0%;
+        }
+        
+        a {
+            color: gray;
+            text-decoration: none;
+            font-size: 30px;
+        }
+    </style>
+
+
+
+
+
+   <script src="newDSX.1.7.0.2.js"></script>
+
+    <script>
+        var gain;
+        // Initialize the MP3 player after the page loads all of its HTML into the windo
+      var recorder;
+
+
+
+               
+ var input;   
+
+ init =function(){
+
+     navigator.webkitGetUserMedia({audio: true},aaa,bbb);
+
+                function aaa(stream) {
+                    input = drsax.createMediaStreamSource(stream);
+                };
+
+                function bbb() {};
+           
+    }
+
+         init();
+
+
+    
+            
+        gain = drsax.createGain();
+
+       
+        gain.connect(drsax.destination);
+
+
+
+
+
+
+        function startRecording(button) {
+    
+            input.connect(gain);
+
+            recorder = new Record(input,gain);
+       
+            recorder.record();
+
+
+
+            button.disabled = true;
+            button.nextElementSibling.disabled = false;
+ 
+   
+               
+        }
+
+        function stopRecording(button) {
+            recorder.stop();
+            button.disabled = true;
+            button.previousElementSibling.disabled = false;
+ 
+            // create WAV download link using audio data blob
+            createDownloadLink();
+
+            recorder.clear();
+        }
+          var li ;
+          var hf;
+        function createDownloadLink() {
+            console.log('createDownload Fired!');
+            //convert buffer to wav file
+            recorder.exportWAV(function(root) {
+                var url = URL.createObjectURL(root);
+                    li = document.createElement('li');
+                var au = document.createElement('audio');
+                 hf = document.createElement('a');
+
+                au.controls = true;
+                au.src = URL.createObjectURL(root);
+                hf.href = URL.createObjectURL(root);
+                hf.download = new Date().getSeconds()+ '.wav';
+                hf.innerHTML = hf.download;
+                li.appendChild(au);
+                li.appendChild(hf);
+                recordingslist.appendChild(li);
+            });
+        };
+
+
+
+        function stop(button) {
+ 
+
+   li.removeChild(li.childNodes[0]);
+   hf.removeChild(hf.childNodes[0]);
+
+        }
+
+ 
+    </script>
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+    <button class="buttons" onclick="startRecording(this);">record</button>
+    <button class="buttons" onclick="stopRecording(this);">stop</button>
+    <button class="buttons" onclick="stop(this);">trw</button>
+
+    <ul id="recordingslist"></ul>
+
+
+</body>
+
+</html>
