@@ -32,6 +32,8 @@ audio{ width:300px; height:30px; background:black; padding:5px; }
    <script src="newDSX.1.7.0.2.js"></script>
 
     <script>
+
+    var DSX = new DSX;
         var gain;
         // Initialize the MP3 player after the page loads all of its HTML into the windo
       var recorder;
@@ -72,7 +74,7 @@ audio{ width:300px; height:30px; background:black; padding:5px; }
     
             input.connect(gain);
 
-            recorder = new Record(input,gain);
+            recorder = new DSX.Record(input,gain);
        
             recorder.record();
 

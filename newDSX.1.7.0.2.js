@@ -1893,12 +1893,11 @@ DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
 
 
 
-
 //////////////////////
 
 
         
-     var Record = function(source,out,cfg) {
+   DSX.prototype.Record = function(source,out,cfg) {
 
                 this.out=out
                 var config = cfg || {};
@@ -1972,14 +1971,7 @@ DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
 
       
 
-            window.Record = Record;
-
-
-
-
-
-
-
+          //  window.Record = Record;
 
 
 
