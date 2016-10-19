@@ -334,6 +334,47 @@
 
 
 </div>
+<!-- recording  bitton-->
+
+<div style="position:absolute;left:650px;top:580px" >
+
+
+    <button  onclick="startRecording();">record</button>
+    <button  onclick="stopRecording();">stop</button>
+    <button  onclick="stop();">trw</button>
+
+    <ul id="recordingslist"></ul>
+</div>
+
+<!-- recording  bitton-->
+
+
+
+<!-- recording  -->
+
+<style>
+audio{ width:300px; height:30px; background:black; padding:5px; }
+
+
+    
+        
+        ul li {
+            list-style-type: none;
+             color: black;
+        }
+        
+        #recordingslist {
+            padding-left: 0%;
+        }
+        
+        a {
+            color: gray;
+            text-decoration: none;
+            font-size: 30px;
+        }
+    </style>
+
+<!--  recording -->
 
 <!-- [no.4 layer center]  audio player area  -->
 
@@ -516,7 +557,7 @@
 
 
     </style>
-     <script src="newDSX.1.7.0.2.js"></script><!--  dr.sax.js library for saxophone -->
+   <script src="newDSX.1.7.0.2.js"></script><!--  dr.sax.js library for saxophone -->
 
     <script>
 
@@ -567,7 +608,74 @@ sax_canvas_freq.getAnalyser(saxgain);
         }
                           }
 
+////////////recorder//////////////
 
+      var recorder;
+
+         var gain_1 = drsax.createGain();
+         var gain_2 = drsax.createGain();
+
+
+
+
+        function startRecording() {
+        
+           gain8.connect(gain_1);
+            gain_2.connect(gain9)
+             recorder = new DSX.Record(gain_1,gain_2);
+       
+            recorder.record();
+
+ 
+   
+               
+        }
+
+        function stopRecording(button) {
+   
+           
+            recorder.stop();
+   
+ 
+        
+            createDownloadLink();
+
+            recorder.clear();
+        }
+          var li ;
+          var hf;
+        function createDownloadLink() {
+            console.log('createDownload Fired!');
+            //convert buffer to wav file
+            recorder.exportWAV(function(root) {
+                var url = URL.createObjectURL(root);
+                    li = document.createElement('li');
+                var au = document.createElement('audio');
+                 hf = document.createElement('a');
+
+                au.controls = true;
+                au.src = URL.createObjectURL(root);
+                hf.href = URL.createObjectURL(root);
+                hf.download = new Date().getSeconds()+ '.wav';
+                hf.innerHTML = hf.download;
+                li.appendChild(au);
+                li.appendChild(hf);
+                recordingslist.appendChild(li);
+            });
+        };
+
+
+
+        function stop(button) {
+ 
+
+   li.removeChild(li.childNodes[0]);
+   hf.removeChild(hf.childNodes[0]);
+
+        }
+
+
+//// recorder out   /////
 
 //// EQ SYSTEM    /////
 
@@ -700,8 +808,9 @@ gain4.connect(gain5);
 gain5.connect(gain6);
 gain6.connect(gain7);//delay
 gain7.connect(gain8);//reverb
-
-gain8.connect(mixgain);
+gain8.connect(gain9);
+gain9.connect(gain10);
+gain10.connect(mixgain);
 mixgain.connect(saxPan);//saxpan
 saxPan.connect(mainout);
 mainout.connect(DAC); //connet main out
@@ -796,6 +905,7 @@ var shift_four_data_ =new DSX.valueChange("shift4",shiftdelay_four.delayTime);
 
 
     </script>
+
 
 
 
