@@ -20,13 +20,14 @@
 
     <!-- main back ground image  -->
 
-    <div id="img2" style="display:block; position:absolute; top: 0px; left :0px; z-index:0">
+        <div id="img2" style="display:block; position:absolute; top: 0px; left :0px; z-index:0">
         <img id="img2" src="bg3.png" alt="Mountain View" style="width:1430px;height:800px;position:absolute;left:80px;top:20px"></div>
 
 
 
-   <span id="note" style="color:white;position:absolute;left:237px;top:197px;"></span>_ 
-      <div style="color:white;position:absolute;left:267px;top:197px;"><span id="pitch" ></span>Hz</div>
+<!-- tunner  -->
+<span id="note" style="color:white;position:absolute;left:712px;top:313px;font-size:35px;"></span>_ 
+<div style="color:white;position:absolute;left:767px;top:313px;font-size:35px;"><span id="pitch" ></span>Hz</div>
 
     <!-- FFT frequrncy Domain Canvas  -->
 
@@ -197,6 +198,17 @@
 
 
 
+   <!-- [no.3-3 layer]   -->
+
+    <webaudio-switch id="shiftAm" style="position:absolute;left:1090px;top:385px " src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+
+
+
+    <webaudio-knob id="am2" style="position:absolute;left:1150px;top:400px " src="cont/img/kblack.png" value="0" max="5000" step="1" diameter="80" sprites="9"></webaudio-knob>
+    <webaudio-knob id="am3" style="position:absolute;left:1250px;top:400px " src="cont/img/kblack.png" value="0" max="1" step="0.05" diameter="80" sprites="9"></webaudio-knob>
+    <webaudio-knob id="am4" style="position:absolute;left:1350px;top:400px " src="cont/img/kblack.png" value="0" max="1" step="0.05" diameter="80" sprites="9"></webaudio-knob>
+
+
 
 
 
@@ -213,17 +225,6 @@
     <webaudio-knob id="feed_back" style="position:absolute;left:1250px;top:570px " src="cont/img/3dd.png" value="0" min="0" max="1.0" step="0.01" diameter="60" sprites="100"></webaudio-knob>
     <webaudio-knob id="reverbtime" style="position:absolute;left:1350px;top:570px " src="cont/img/3dd.png" value="0" max="1" step="0.01" diameter="60" sprites="100"></webaudio-knob>
 
-
-
-   <!-- [no.3-3 layer]   -->
-
-    <webaudio-switch id="switch3" style="position:absolute;left:1090px;top:385px " src="cont/img/blue.png" value="1" height="50" width="50"></webaudio-switch>
-
-
-
-    <webaudio-knob id="knob1" style="position:absolute;left:1150px;top:400px " src="cont/img/kblack.png" value="0" max="10" step="1" diameter="80" sprites="9"></webaudio-knob>
-    <webaudio-knob id="knob1" style="position:absolute;left:1250px;top:400px " src="cont/img/kblack.png" value="0" max="10" step="1" diameter="80" sprites="9"></webaudio-knob>
-    <webaudio-knob id="knob1" style="position:absolute;left:1350px;top:400px " src="cont/img/kblack.png" value="0" max="10" step="1" diameter="80" sprites="9"></webaudio-knob>
 
 
 
@@ -849,8 +850,9 @@ sound11.play();
 
         var shift_one= new DSX.pitchShift(0.7,1.1);
         var shift_two= new DSX.pitchShift(0.6,0.8);
-        var shift_tree= new DSX.pitchShift(0.5,0.6);
-        var shift_four= new DSX.pitchShift(0.2,0.4);
+    var am2 = new  DSX.AM({mod_type :"sine",modfreq:500,depth:0.7,gain:0.5});
+var am3 = new  DSX.AM({mod_type :"sine",modfreq:300,depth:0.9,gain:0.5});
+
 
         var shiftdelay_one = new DSX.DelayPipe({delayTime:1});
         var shiftdelay_two = new DSX.DelayPipe({delayTime:2});
@@ -877,13 +879,13 @@ function shiftdata(e){
         shiftdelay_two.connect(gain5);
    
 
-        shift_tree.get(gain4);
-       shift_tree.connect(shiftdelay_tree);
+        am2.get(gain4);
+        am2.connect(shiftdelay_tree);
        shiftdelay_tree.connect(gain5);
   
 
-        shift_four.get(gain4);
-       shift_four.connect(shiftdelay_four);
+        am3.get(gain4);
+      am3.connect(shiftdelay_four);
        shiftdelay_four.connect(gain5);
   
 
@@ -900,6 +902,40 @@ var shift_one_data_ =new DSX.valueChange("shift1",shiftdelay_one.delayTime);
 var shift_two_data_ =new DSX.valueChange("shift2",shiftdelay_two.delayTime); 
 var shift_tree_data_ =new DSX.valueChange("shift3",shiftdelay_tree.delayTime); 
 var shift_four_data_ =new DSX.valueChange("shift4",shiftdelay_four.delayTime); 
+
+
+////////////var ///////////
+var am = new  DSX.AM({mod_type :"sine",modfreq:200,depth:0.5,gain:0.5});
+
+var sax_am2 =new DSX.valueChange("am2",am.modfreq); 
+var sax_am3 =new DSX.valueChange("am3",am.depth); 
+var sax_am4 =new DSX.valueChange("am4",am.gain); 
+
+
+
+var bypassAm =new DSX.functionChange('shiftAm',shiftAmdata); 
+
+function shiftAmdata(e){
+
+
+ if (e.target.value == "1") {
+ gain8.disconnect();   
+am.get(gain8)
+am.connect(gain9)
+
+
+
+        }
+    if (e.target.value == "0") {
+         gain8.connect(gain9); 
+ am.stop();
+
+        }
+
+}
+
+
+
 
 
 
