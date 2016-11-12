@@ -1,7 +1,5 @@
-
 //  The MIT License (MIT)
 //  Copyright (c) 2016  Euyshick Hong(Dr.Hong)
-
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 ///  in the Software without restriction, including without limitation the rights
@@ -17,10 +15,6 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
-
-
-
-
 (function(window) {
 
     var drsaxContext,
@@ -67,7 +61,7 @@
                     this.output.disconnect(target);
                 }
             },
-   
+
             getDefaults: {
                 value: function() {
                     var result = {};
@@ -79,13 +73,13 @@
             }
         })
 
-        OscObject = Object.create(null, {
-          
-        
-        })
+    OscObject = Object.create(null, {
 
 
-        FLOAT = "float",
+    })
+
+
+    FLOAT = "float",
         BOOLEAN = "boolean",
         STRING = "string",
         INT = "int";
@@ -243,7 +237,7 @@
         defaults: {
             writable: true,
             value: {
-                pan:{
+                pan: {
                     value: 0,
                     min: -1,
                     max: 1,
@@ -257,7 +251,7 @@
 
         pan: {
             enumerable: true,
-            get: function(){
+            get: function() {
                 return this.stereoPan.pan;
             },
             set: function(value) {
@@ -729,14 +723,14 @@
 
 
     DSX.prototype.Osc = function(properties) {
-        
+
 
         this.drOsc = drsax.createOscillator();
         this.gain_out = drsax.createGain();
 
 
         this.frequency = this.drOsc.frequency; ///////simple datachange
-         this.wave = this.drOsc; ///////simple datachange
+        this.wave = this.drOsc; ///////simple datachange
         this.detune = this.drOsc.detune; ///////simple datachange
         this.drOsc.start(0);
 
@@ -751,29 +745,29 @@
         this.start = function() {
 
             this.drOsc.connect(this.gain_out);
-      
+
         }
 
         this.stop = function() {
-      this.drOsc.disconnect(this.gain_out);
+            this.drOsc.disconnect(this.gain_out);
         }
-     
 
 
-    this.type = properties.type;
-    this.freq = properties.freq;
+
+        this.type = properties.type;
+        this.freq = properties.freq;
     }
 
-        DSX.prototype.Osc.prototype = Object.create(OscObject, {
+    DSX.prototype.Osc.prototype = Object.create(OscObject, {
 
 
-   type: {
+        type: {
             enumerable: true,
             get: function() {
                 return this.drOsc
             },
             set: function(value) {
-                 this.drOsc.type= value;
+                this.drOsc.type = value;
             }
         },
 
@@ -785,7 +779,7 @@
                 return this.drOsc.frequency
             },
             set: function(value) {
-                 this.drOsc.frequency.value= value;
+                this.drOsc.frequency.value = value;
             }
         }
     });
@@ -794,9 +788,9 @@
     /////////////////////////////////////
 
 
-DSX.prototype.AM = function(properties) {
+    DSX.prototype.AM = function(properties) {
 
-       
+
 
 
         this.AMOsc = drsax.createOscillator();
@@ -804,15 +798,14 @@ DSX.prototype.AM = function(properties) {
         this.mainout = drsax.createGain();
         this.depth_gain = drsax.createGain();
 
-    
 
-      
+
 
         this.AMOsc.connect(this.gain1);
         this.gain1.connect(this.mainout.gain);
         this.depth_gain.connect(this.mainout.gain);
 
-         this.AMOsc.start(0);
+        this.AMOsc.start(0);
 
 
         this.get = function(dat) {
@@ -830,7 +823,7 @@ DSX.prototype.AM = function(properties) {
             this.out = out;
 
             this.mainout.connect(out);
-        
+
 
         };
         this.stop = function() {
@@ -841,26 +834,26 @@ DSX.prototype.AM = function(properties) {
         };
 
 
-      this.modfreq =properties. modfreq;
-      this.mod_type = properties.mod_type;
-      this.depth =properties.depth;
-      this.gain =properties.gain;
+        this.modfreq = properties.modfreq;
+        this.mod_type = properties.mod_type;
+        this.depth = properties.depth;
+        this.gain = properties.gain;
 
     }
 
 
 
-         DSX.prototype.AM.prototype = Object.create(OscObject, {
+    DSX.prototype.AM.prototype = Object.create(OscObject, {
 
 
 
-   mod_type: {
+        mod_type: {
             enumerable: true,
             get: function() {
                 return this.AMOsc
             },
             set: function(value) {
-                 this.AMOsc.type= value;
+                this.AMOsc.type = value;
             }
         },
 
@@ -872,7 +865,7 @@ DSX.prototype.AM = function(properties) {
                 return this.AMOsc.frequency;
             },
             set: function(value) {
-                 this.AMOsc.frequency.value= value;
+                this.AMOsc.frequency.value = value;
             }
         },
 
@@ -883,18 +876,18 @@ DSX.prototype.AM = function(properties) {
                 return this.gain1.gain;
             },
             set: function(value) {
-                 this.gain1.gain.value= value;
+                this.gain1.gain.value = value;
             }
         },
 
 
-   gain: {
+        gain: {
             enumerable: true,
             get: function() {
                 return this.mainout.gain
             },
             set: function(value) {
-                 this.mainout.gain.value= value;
+                this.mainout.gain.value = value;
             }
         }
 
@@ -903,11 +896,11 @@ DSX.prototype.AM = function(properties) {
 
 
 
-//////////////////////////////////////////////////////////
-    
+    //////////////////////////////////////////////////////////
+
     DSX.prototype.FM = function(properties) {
 
-      
+
 
         this.CAOsc = drsax.createOscillator();
         this.FMOsc = drsax.createOscillator();
@@ -944,28 +937,28 @@ DSX.prototype.AM = function(properties) {
 
 
         };
-   this.carrier_type =properties.carrier_type
-  this.carrier = properties.carrier;
-  this.modfreq =properties. modfreq;
-   this.mod_type = properties.mod_type;
-   this.depth =properties.depth;
-        this.gain =properties.gain;
+        this.carrier_type = properties.carrier_type
+        this.carrier = properties.carrier;
+        this.modfreq = properties.modfreq;
+        this.mod_type = properties.mod_type;
+        this.depth = properties.depth;
+        this.gain = properties.gain;
 
 
     }
 
 
 
-         DSX.prototype.FM.prototype = Object.create(OscObject, {
+    DSX.prototype.FM.prototype = Object.create(OscObject, {
 
 
-   carrier_type: {
+        carrier_type: {
             enumerable: true,
             get: function() {
                 return this.CAOsc
             },
             set: function(value) {
-                 this.CAOsc.type= value;
+                this.CAOsc.type = value;
             }
         },
 
@@ -977,17 +970,17 @@ DSX.prototype.AM = function(properties) {
                 return this.CAOsc.frequency
             },
             set: function(value) {
-                 this.CAOsc.frequency.value= value;
+                this.CAOsc.frequency.value = value;
             }
         },
 
-   mod_type: {
+        mod_type: {
             enumerable: true,
             get: function() {
                 return this.FMOsc
             },
             set: function(value) {
-                 this.FMOsc.type= value;
+                this.FMOsc.type = value;
             }
         },
 
@@ -999,7 +992,7 @@ DSX.prototype.AM = function(properties) {
                 return this.FMOsc.frequency
             },
             set: function(value) {
-                 this.FMOsc.frequency.value= value;
+                this.FMOsc.frequency.value = value;
             }
         },
 
@@ -1010,18 +1003,18 @@ DSX.prototype.AM = function(properties) {
                 return this.gain1.gain
             },
             set: function(value) {
-                 this.gain1.gain.value= value;
+                this.gain1.gain.value = value;
             }
         },
 
 
-   gain: {
+        gain: {
             enumerable: true,
             get: function() {
                 return this.mainout.gain
             },
             set: function(value) {
-                 this.mainout.gain.value= value;
+                this.mainout.gain.value = value;
             }
         }
 
@@ -1030,7 +1023,7 @@ DSX.prototype.AM = function(properties) {
 
 
 
-//////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
 
     DSX.prototype.Subtract = function(properties) {
         if (!properties) {
@@ -1131,8 +1124,8 @@ DSX.prototype.AM = function(properties) {
     /////// BGsound /////////////////////////////////
     DSX.prototype.BGsound = function(out) {
 
-         this.speed = 1;
-    this.out =out
+        this.speed = 1;
+        this.out = out
 
 
         var uploadfile;
@@ -1163,19 +1156,18 @@ DSX.prototype.AM = function(properties) {
             this.BG.connect(out);
             this.BG.start(0);
             this.BG.buffer = uploadfile;
-            this.data =this.BG.playbackRate;
+            this.data = this.BG.playbackRate;
             this.data.value = this.speed;
-        
-         
 
-        this.stop = function() {
 
-            this.BG.stop(0);
+
+            this.stop = function() {
+
+                this.BG.stop(0);
+            }
+
+
         }
-
-    
-}
-
 
 
 
@@ -1195,11 +1187,11 @@ DSX.prototype.AM = function(properties) {
         this.reverb_Gain = drsax.createGain();
         this.reverb_convolver = drsax.createConvolver();
         this.masterGain = drsax.createGain();
-       // this.gain = this.reverb_Gain.gain; ///////simple datachange
+        // this.gain = this.reverb_Gain.gain; ///////simple datachange
 
         this.reverb_convolver.loop = false;
         this.reverb_convolver.normalize = true;
-     
+
 
 
 
@@ -1251,12 +1243,12 @@ DSX.prototype.AM = function(properties) {
 
         };
 
-   this.gain = properties.gain;
+        this.gain = properties.gain;
 
 
-    }    
+    }
 
-       DSX.prototype.Reverb.prototype = Object.create(OscObject, {
+    DSX.prototype.Reverb.prototype = Object.create(OscObject, {
 
         gain: {
             enumerable: true,
@@ -1264,12 +1256,12 @@ DSX.prototype.AM = function(properties) {
                 return this.reverb_Gain.gain;
             },
             set: function(value) {
-                 this.reverb_Gain.gain.value= value;
+                this.reverb_Gain.gain.value = value;
             }
         }
     });
 
-/////////////////////////////////////
+    /////////////////////////////////////
 
 
 
@@ -1329,66 +1321,60 @@ DSX.prototype.AM = function(properties) {
     }
 
 
-/////////////////////////////////
+    /////////////////////////////////
 
 
-    DSX.prototype.functionChange = function(c,out) {
+    DSX.prototype.functionChange = function(c, out) {
 
 
         this.c = c;
-         this.out = out;
+        this.out = out;
         this.dial_10 = document.getElementById(c);
         this.dial_10.addEventListener("change", out, false);
 
-        }
+    }
 
 
 
 
-
-    
-/////////////////////////////////
+    /////////////////////////////////
 
 
 
 
+    DSX.prototype.valueToggle = function(c, out) {
 
 
-    DSX.prototype.valueToggle = function(c,out) {
-
-
-            this.c = c;
-            this.out = out;
-            this.dial_10 = document.getElementById(c);
-            this.dial_10.addEventListener("click", out, false);
-
-            }
-
-        
-
-
-
-
-        ////////////////////////////////////////////////
-    DSX.prototype.freqDomain = function(out,color) {
-        
+        this.c = c;
         this.out = out;
-        this.color =color;
+        this.dial_10 = document.getElementById(c);
+        this.dial_10.addEventListener("click", out, false);
+
+    }
+
+
+
+
+    ////////////////////////////////////////////////
+    DSX.prototype.freqDomain = function(out, color) {
+
+        this.out = out;
+        this.color = color;
 
 
         var Analyser_CANVAS = drsax.createAnalyser();
-        
+
 
 
         this.getAnalyser = function(out) {
-            
+
             this.out = out;
             this.out.connect(Analyser_CANVAS);
 
         }
 
-       var canvas1 = document.getElementById(out);
-       var ctx_frequency = canvas1.getContext('2d');
+        var canvas1 = document.getElementById(out);
+        var ctx_frequency = canvas1.getContext('2d');
         frameLooper();
 
         function frameLooper() {
@@ -1412,74 +1398,72 @@ DSX.prototype.AM = function(properties) {
 
 
 
-        ////////////////////////////////////////////////
-    DSX.prototype.ampDomain = function(out,color,canvasWidth,canvasHeight) {
-        
-     
+    ////////////////////////////////////////////////
+    DSX.prototype.ampDomain = function(out, color, canvasWidth, canvasHeight) {
+
+
 
         this.out = out;
-    this.color =color;
-     
+        this.color = color;
+
         var Analyser_CANVAS1 = drsax.createAnalyser();
-       
+
 
 
 
         this.getAnalyser = function(out) {
-            
+
             this.out = out;
-     
+
             this.out.connect(Analyser_CANVAS1);
-           
-           clearInterval(ampDomain_data);
 
-     }
-       
+            clearInterval(ampDomain_data);
 
-   var ampDomain_data;
-    var column = 0;
-    this.canvasWidth  = canvasWidth;
-    this.canvasHeight = canvasHeight;
+        }
 
-     var canvas2 = document.getElementById(out);
-     var ctx_amp = canvas2.getContext('2d');
-    frameLooper1();
+
+        var ampDomain_data;
+        var column = 0;
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+
+        var canvas2 = document.getElementById(out);
+        var ctx_amp = canvas2.getContext('2d');
+        frameLooper1();
 
 
 
         function frameLooper1() {
 
-         window.requestAnimationFrame(frameLooper1);
-           amplitudeArray = new Uint8Array(Analyser_CANVAS1.frequencyBinCount);
-        Analyser_CANVAS1.getByteTimeDomainData(amplitudeArray);
-       
-        var minValue = 9999999;
-        var maxValue = 0;
-        for (var i = 0; i < amplitudeArray.length; i++) {
-            var value = amplitudeArray[i] / 256;
-            if(value > maxValue) {
-                maxValue = value;
-            } else if(value < minValue) {
-                minValue = value;
+            window.requestAnimationFrame(frameLooper1);
+            amplitudeArray = new Uint8Array(Analyser_CANVAS1.frequencyBinCount);
+            Analyser_CANVAS1.getByteTimeDomainData(amplitudeArray);
+
+            var minValue = 9999999;
+            var maxValue = 0;
+            for (var i = 0; i < amplitudeArray.length; i++) {
+                var value = amplitudeArray[i] / 256;
+                if (value > maxValue) {
+                    maxValue = value;
+                } else if (value < minValue) {
+                    minValue = value;
+                }
+
+
             }
 
-           
-        }
 
+            var y_lo = canvasHeight - (canvasHeight * minValue) - 1;
+            var y_hi = canvasHeight - (canvasHeight * maxValue) - 1;
+            ctx_amp.fillStyle = color;
+            ctx_amp.fillRect(column, y_lo, 1, y_hi - y_lo);
+            // loop around the canvas when we reach the end
+            column += 1;
+            if (column >= canvasWidth) {
+                column = 0;
+                ctx_amp.clearRect(0, 0, canvasWidth, canvasHeight);
 
-      var y_lo = canvasHeight - (canvasHeight * minValue) - 1;
-      var y_hi = canvasHeight - (canvasHeight * maxValue) - 1;
-       ctx_amp.fillStyle = color;
-       ctx_amp.fillRect(column,y_lo, 1, y_hi - y_lo);
-        // loop around the canvas when we reach the end
-        column += 1;
-        if(column >= canvasWidth) {
-            column = 0;
-            ctx_amp.clearRect(0, 0, canvasWidth, canvasHeight);
-
-        }
-
-
+            }
 
 
 
@@ -1487,218 +1471,221 @@ DSX.prototype.AM = function(properties) {
         }
 
 
- this.cutAnalyser = function() {
-            
-ampDomain_data = setInterval(function() {
+        this.cutAnalyser = function() {
+
+            ampDomain_data = setInterval(function() {
                 column = 0;
             }, 10);
 
-    column = 0;
+            column = 0;
             ctx_amp.clearRect(0, 0, canvasWidth, canvasHeight);
-                         }
+        }
 
 
 
-}
-
-
-
-
-//////////////////////////////////////////////
+    }
 
 
 
 
-    DSX.prototype.Tunner = function(pit,note) {
+    //////////////////////////////////////////////
 
-        this.pit = pit;
-        this.note = note;
-        pitchData =this.pitchData;
 
-    
-        var Analyser_Tunner = drsax.createAnalyser();
-        
-        this.getAnalyser = function(out) {
-            
+
+
+    DSX.prototype.Tunner = function(pit, note) {
+
+            this.pit = pit;
+            this.note = note;
+            pitchData = this.pitchData;
+
+
+            var Analyser_Tunner = drsax.createAnalyser();
+
+            this.getAnalyser = function(out) {
+
+                this.out = out;
+                this.out.connect(Analyser_Tunner);
+                this.updatePitch();
+
+            }
+
+
+
+
+            var detectorElem, canvasElem, pitchElem, noteElem, fff;
+
+            pitchElem = document.getElementById(pit);
+            noteElem = document.getElementById(note);
+
+
+
+
+            var theBuffer = null;
+            var rafID = null;
+            var tracks = null;
+            var buflen = 1024;
+            var buf = new Float32Array(buflen);
+            var noteStrings = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
+
+            function noteFromPitch(frequency) {
+                var noteNum = 12 * (Math.log(frequency / 440) / Math.log(2));
+                return Math.round(noteNum) + 69;
+            }
+
+            function frequencyFromNoteNumber(note) {
+                return 440 * Math.pow(2, (note - 69) / 12);
+            }
+
+            function centsOffFromPitch(frequency, note) {
+                return Math.floor(1200 * Math.log(frequency / frequencyFromNoteNumber(note)) / Math.log(2));
+            }
+            var MIN_SAMPLES = 0;
+
+            function autoCorrelate(buf, sampleRate) {
+                var SIZE = buf.length;
+                var MAX_SAMPLES = Math.floor(SIZE / 2);
+                var best_offset = -1;
+                var best_correlation = 0;
+                var rms = 0;
+                var foundGoodCorrelation = false;
+                var correlations = new Array(MAX_SAMPLES);
+
+
+                for (var i = 0; i < SIZE; i++) {
+                    var val = buf[i];
+                    rms += val * val;
+                }
+                rms = Math.sqrt(rms / SIZE);
+
+
+                if (rms < 0.01)
+                    return -1;
+                var lastCorrelation = 1;
+                for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
+                    var correlation = 0;
+                    for (var i = 0; i < MAX_SAMPLES; i++) {
+                        correlation += Math.abs((buf[i]) - (buf[i + offset]));
+                    }
+                    correlation = 1 - (correlation / MAX_SAMPLES);
+                    correlations[offset] = correlation;
+                    if ((correlation > 0.9) && (correlation > lastCorrelation)) {
+                        foundGoodCorrelation = true;
+                        if (correlation > best_correlation) {
+                            best_correlation = correlation;
+                            best_offset = offset;
+                        }
+                    } else if (foundGoodCorrelation) {
+
+                        var shift = (correlations[best_offset + 1] - correlations[best_offset - 1]) / correlations[best_offset];
+                        return sampleRate / (best_offset + (8 * shift));
+                    }
+                    lastCorrelation = correlation;
+                }
+
+                if (best_correlation > 0.01) {
+
+                    return sampleRate / best_offset;
+                }
+                return -1;
+
+            }
+
+
+            this.updatePitch = function updatePitch() {
+
+                var cycles = new Array;
+                Analyser_Tunner.getFloatTimeDomainData(buf);
+                var ac = autoCorrelate(buf, drsaxContext.sampleRate);
+                rafID = window.requestAnimationFrame(updatePitch);
+
+                if (ac == -1) {
+
+                    pitchElem.innerText = "440";
+                    noteElem.innerText = "A";
+
+
+                } else {
+                    this.pitchData = Math.round(ac);
+                    pitchElem.innerText = this.pitchData;
+
+                    var note = noteFromPitch(ac);
+                    noteElem.innerHTML = noteStrings[note % 12];
+
+                }
+
+            }
+
+
+
+        }
+        ////////////////// music player///////////
+
+    DSX.prototype.musicPlayer = function() {
+
+
+        window.addEventListener('load', this.load, false);
+
+        this.load = function(out, out_two) {
+
             this.out = out;
-            this.out.connect(Analyser_Tunner);
-            this.updatePitch();
+            this.out_two = out_two;
+
+            var fileUp = document.getElementById(out);
+            var audioPlay = document.getElementById(out_two);
+            fileUp.addEventListener('change', onFile, false);
+
+
+            function onFile() {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    audioPlay.src = evt.target.result;
+                }
+                reader.readAsDataURL(this.files[0]);
+
+
+            }
+
 
         }
 
 
 
-
-
-var detectorElem, canvasElem,  pitchElem, noteElem,fff;
-
-pitchElem = document.getElementById( pit);
-noteElem = document.getElementById( note);
-
-
-
-
-
-var theBuffer = null;
-var rafID = null;
-var tracks = null;
-var buflen = 1024;
-var buf = new Float32Array( buflen );
-var noteStrings = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
-function noteFromPitch( frequency ) {
-  var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
-  return Math.round( noteNum ) + 69;
-}
-function frequencyFromNoteNumber( note ) {
-  return 440 * Math.pow(2,(note-69)/12);
-}
-function centsOffFromPitch( frequency, note ) {
-  return Math.floor( 1200 * Math.log( frequency / frequencyFromNoteNumber( note ))/Math.log(2) );
-}
-var MIN_SAMPLES = 0;  
-
-function autoCorrelate( buf, sampleRate ) {
-  var SIZE = buf.length;
-  var MAX_SAMPLES = Math.floor(SIZE/2);
-  var best_offset = -1;
-  var best_correlation = 0;
-  var rms = 0;
-  var foundGoodCorrelation = false;
-  var correlations = new Array(MAX_SAMPLES);
-
-
-  for (var i=0;i<SIZE;i++) {
-    var val = buf[i];
-    rms += val*val;
-  }
-  rms = Math.sqrt(rms/SIZE);
-
-
-  if (rms<0.01) 
-    return -1;
-  var lastCorrelation=1;
-  for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
-    var correlation = 0;
-    for (var i=0; i<MAX_SAMPLES; i++) {
-      correlation += Math.abs((buf[i])-(buf[i+offset]));
-    }
-    correlation = 1 - (correlation/MAX_SAMPLES);
-    correlations[offset] = correlation; 
-    if ((correlation>0.9) && (correlation > lastCorrelation)) {
-      foundGoodCorrelation = true;
-      if (correlation > best_correlation) {
-        best_correlation = correlation;
-        best_offset = offset;
-      }
-    } else if (foundGoodCorrelation) {
-      
-      var shift = (correlations[best_offset+1] - correlations[best_offset-1])/correlations[best_offset];  
-      return sampleRate/(best_offset+(8*shift));
-    }
-    lastCorrelation = correlation;
-  }
-
-  if (best_correlation > 0.01) {
-
-    return sampleRate/best_offset;
-  }
-  return -1;
-
-}
-
-
-this.updatePitch = function updatePitch() {
- 
-  var cycles = new Array;
-  Analyser_Tunner.getFloatTimeDomainData( buf );
-  var ac = autoCorrelate( buf, drsaxContext.sampleRate );
-  rafID = window.requestAnimationFrame(updatePitch);
-
-  if (ac == -1) {
-  
-    pitchElem.innerText = "440";
-    noteElem.innerText = "A";
-
-
-  } else {
-    this.pitchData = Math.round(ac);
-    pitchElem.innerText = this.pitchData;
-    
-    var note =  noteFromPitch(ac);
-    noteElem.innerHTML = noteStrings[note%12];
-
-  }
-   
-}
-
-
-
- }
-////////////////// music player///////////
-
-  DSX.prototype.musicPlayer = function() {
-
-
-window.addEventListener('load', this.load, false);
-
-     this.load = function(out,out_two) {
-
-    this.out = out;
-    this.out_two =out_two;
-
-    var fileUp = document.getElementById(out);
-    var audioPlay = document.getElementById(out_two);
-    fileUp.addEventListener('change', onFile, false);
-
-
-      function onFile(){   
-    var reader = new FileReader();
-    reader.onload = function (evt){ audioPlay.src = evt.target.result;}
-    reader.readAsDataURL(this.files[0]);
-
-     
-                         }   
-
-
-                                        }
-
-                                 
-
     }
 
 
 
-DSX.prototype.ATRS = function() {
-   
+    DSX.prototype.ATRS = function() {
+
 
         this.gain = drsax.createGain();
 
-        this.gain1= drsax.createGain();
-        this.gain2= drsax.createGain();
+        this.gain1 = drsax.createGain();
+        this.gain2 = drsax.createGain();
 
 
 
-      this.attack =  this.gain1.gain;
-      this.release = this.gain2.gain;
+        this.attack = this.gain1.gain;
+        this.release = this.gain2.gain;
 
-  
+
         this.soundfrom = function(sound) {
-           this.sound=sound;
-      
+            this.sound = sound;
 
 
-    this.sound.connect(this.gain);
 
-    this.now = drsax.currentTime;
-    this.gain.gain.cancelScheduledValues(this.now);
-    this.gain.gain.setValueAtTime(0, this.now);
-    this.gain.gain.linearRampToValueAtTime(1, this.now+ 0.01 + this.attack.value);
-    this.gain.gain.linearRampToValueAtTime(0 , this.now +0.02 + this.attack.value + this.release.value);
+            this.sound.connect(this.gain);
+
+            this.now = drsax.currentTime;
+            this.gain.gain.cancelScheduledValues(this.now);
+            this.gain.gain.setValueAtTime(0, this.now);
+            this.gain.gain.linearRampToValueAtTime(1, this.now + 0.01 + this.attack.value);
+            this.gain.gain.linearRampToValueAtTime(0, this.now + 0.02 + this.attack.value + this.release.value);
 
         };
 
-    
-    this.connect = function(out) {
+
+        this.connect = function(out) {
             this.out = out;
             this.gain.connect(out);
 
@@ -1713,7 +1700,7 @@ DSX.prototype.ATRS = function() {
 
 
 
-    DSX.prototype.BGdata = function(file){
+    DSX.prototype.BGdata = function(file) {
 
         this.file = file
 
@@ -1722,125 +1709,125 @@ DSX.prototype.ATRS = function() {
         getFile_sound.responseType = "arraybuffer";
         getFile_sound.send();
 
-      getFile_sound.onload = function() {
-      var audioData = getFile_sound.response;
-      drsax.decodeAudioData(audioData, function(buffer) {
-        myBuffer = buffer;
-                                                         });
-                                    }
+        getFile_sound.onload = function() {
+            var audioData = getFile_sound.response;
+            drsax.decodeAudioData(audioData, function(buffer) {
+                myBuffer = buffer;
+            });
+        }
 
-           this.BG = drsax.createBufferSource();
-            this.speed= this.BG.playbackRate;
-            this.connect = function(out) {
-    
+        this.BG = drsax.createBufferSource();
+        this.speed = this.BG.playbackRate;
+        this.connect = function(out) {
+
             this.out = out;
             this.BG.connect(out);
             this.BG.buffer = myBuffer;
-       
-     
-           this.start = function() {
-            this.BG.start(0);
-        }
 
 
-        this.stop = function() {
-
-            this.BG.stop();
-        }
-
-      //this.playbackRate.value = 1.25;
-}
-
-
-    };
-
-
-DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
-
-
-
-    this.pitchRatio = pitchRatio;
-
-
-    this.overlapRatio = overlapRatio;
- 
-
-
-
-    hannWindow = function() {
-
-        var window = new Float32Array(512);
-        for (var i = 0; i < 512; i++) {
-            window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (512 - 1)));
-        }
-        return window;
-    };
-
-    this.pitchShifterProcessor = drsaxContext.createScriptProcessor(512, 1, 1);
-    this.pitchShifterProcessor.buffer = new Float32Array(512 * 2);
-    this.pitchShifterProcessor.grainWindow = hannWindow();
-
-    this.connect = function(out) {
-        this.out = out;
-        this.pitchShifterProcessor.connect(out);
-
-
-    }
-
-
-    this.get = function(dat) {
-
-        this.dat = dat;
-
-
-        this.dat.connect(this.pitchShifterProcessor);
-
-    };
-
-    this.pitchShifterProcessor.onaudioprocess = function(event) {
-
-
-
-        var inputData = event.inputBuffer.getChannelData(0);
-        var outputData = event.outputBuffer.getChannelData(0);
-
-
-        for (i = 0; i < inputData.length; i++) {
-
-            inputData[i] *= this.grainWindow[i];
-            this.buffer[i] = this.buffer[i + 512];
-            this.buffer[i + 512] = 0.0;
-        }
-
-
-        var grainData = new Float32Array(512 * 2);
-        for (var i = 0, j = 0.0; i < 512; i++, j += pitchRatio) {
-
-            var index = Math.floor(j) % 512;
-            var a = inputData[index];
-            var b = inputData[(index + 1) % 512];
-            grainData[i] += a + (b - a) * (j % 1.0) * this.grainWindow[i];
-        }
-
-        for (i = 0; i < 512; i += Math.round(512 * (1 - overlapRatio))) {
-            for (j = 0; j <= 512; j++) {
-                this.buffer[i + j] += grainData[j];
+            this.start = function() {
+                this.BG.start(0);
             }
+
+
+            this.stop = function() {
+
+                this.BG.stop();
+            }
+
+            //this.playbackRate.value = 1.25;
         }
-        for (i = 0; i < 512; i++) {
-            outputData[i] = this.buffer[i];
+
+
+    };
+
+
+    DSX.prototype.pitchShift = function(overlapRatio, pitchRatio) {
+
+
+
+        this.pitchRatio = pitchRatio;
+
+
+        this.overlapRatio = overlapRatio;
+
+
+
+
+        hannWindow = function() {
+
+            var window = new Float32Array(512);
+            for (var i = 0; i < 512; i++) {
+                window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (512 - 1)));
+            }
+            return window;
+        };
+
+        this.pitchShifterProcessor = drsaxContext.createScriptProcessor(512, 1, 1);
+        this.pitchShifterProcessor.buffer = new Float32Array(512 * 2);
+        this.pitchShifterProcessor.grainWindow = hannWindow();
+
+        this.connect = function(out) {
+            this.out = out;
+            this.pitchShifterProcessor.connect(out);
+
+
         }
 
-    }
 
-};
+        this.get = function(dat) {
+
+            this.dat = dat;
+
+
+            this.dat.connect(this.pitchShifterProcessor);
+
+        };
+
+        this.pitchShifterProcessor.onaudioprocess = function(event) {
+
+
+
+            var inputData = event.inputBuffer.getChannelData(0);
+            var outputData = event.outputBuffer.getChannelData(0);
+
+
+            for (i = 0; i < inputData.length; i++) {
+
+                inputData[i] *= this.grainWindow[i];
+                this.buffer[i] = this.buffer[i + 512];
+                this.buffer[i + 512] = 0.0;
+            }
+
+
+            var grainData = new Float32Array(512 * 2);
+            for (var i = 0, j = 0.0; i < 512; i++, j += pitchRatio) {
+
+                var index = Math.floor(j) % 512;
+                var a = inputData[index];
+                var b = inputData[(index + 1) % 512];
+                grainData[i] += a + (b - a) * (j % 1.0) * this.grainWindow[i];
+            }
+
+            for (i = 0; i < 512; i += Math.round(512 * (1 - overlapRatio))) {
+                for (j = 0; j <= 512; j++) {
+                    this.buffer[i + j] += grainData[j];
+                }
+            }
+            for (i = 0; i < 512; i++) {
+                outputData[i] = this.buffer[i];
+            }
+
+        }
+
+    };
 
 
 
 
-/////////////////////////////
+    /////////////////////////////
 
- DSX.prototype.DelayPipe = function(properties) {
+    DSX.prototype.DelayPipe = function(properties) {
         if (!properties) {
             properties = this.getDefaults();
         }
@@ -1853,7 +1840,7 @@ DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
         this.activateNode.connect(this.Delay);
         this.Delay.connect(this.output);
 
-        this.delayTime = properties.delayTime|| this.defaults.delayTime.value;
+        this.delayTime = properties.delayTime || this.defaults.delayTime.value;
         this.bypass = properties.bypass || false;
     };
     DSX.prototype.DelayPipe.prototype = Object.create(Super, {
@@ -1893,112 +1880,85 @@ DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
 
 
 
-//////////////////////
+    //////////////////////
 
 
-        
-   DSX.prototype.Record = function(source,out,cfg) {
 
-                this.out=out
-                var config = cfg || {};
-                var bufferLen = config.bufferLen || 4096;
-                this.context = source.context;
-                this.node = (this.context.createScriptProcessor ||
-                    this.context.createJavaScriptNode).call(this.context,
-                    bufferLen, 2, 2);
-                var worker = new Worker('record.js');
-                worker.postMessage({
-                    command: 'init',
-                    config: {
-                        sampleRate: this.context.sampleRate
-                    }
-                });
-                var recording = false,
-                    currCallback;
-                this.node.onaudioprocess = function(e) {
-                    if (!recording) return;
-                    worker.postMessage({
-                        command: 'record',
-                        buffer: [
-                            e.inputBuffer.getChannelData(0),
-                            e.inputBuffer.getChannelData(1)
-                        ]
-                    });
+    DSX.prototype.Record = function(source, out, cfg) {
+
+        this.out = out
+        var config = cfg || {};
+        var bufferLen = config.bufferLen || 4096;
+        this.context = source.context;
+        this.node = (this.context.createScriptProcessor ||
+            this.context.createJavaScriptNode).call(this.context,
+            bufferLen, 2, 2);
+        var worker = new Worker('record.js');
+        worker.postMessage({
+            command: 'init',
+            config: {
+                sampleRate: this.context.sampleRate
+            }
+        });
+        var recording = false,
+            currCallback;
+        this.node.onaudioprocess = function(e) {
+            if (!recording) return;
+            worker.postMessage({
+                command: 'record',
+                buffer: [
+                    e.inputBuffer.getChannelData(0),
+                    e.inputBuffer.getChannelData(1)
+                ]
+            });
+        }
+        this.configure = function(cfg) {
+            for (var prop in cfg) {
+                if (cfg.hasOwnProperty(prop)) {
+                    config[prop] = cfg[prop];
                 }
-                this.configure = function(cfg) {
-                    for (var prop in cfg) {
-                        if (cfg.hasOwnProperty(prop)) {
-                            config[prop] = cfg[prop];
-                        }
-                    }
-                }
-                this.record = function() {
-                    recording = true;
-                }
-                this.stop = function() {
-                    recording = false;
-                }
-                this.clear = function() {
-                    worker.postMessage({
-                        command: 'clear'
-                    });
-                }
-                this.getBuffer = function(cb) {
-                    currCallback = cb || config.callback;
-                    worker.postMessage({
-                        command: 'getBuffer'
-                    })
-                }
-                this.exportWAV = function(cb, type) {
-                    currCallback = cb || config.callback;
-                    type = type || config.type || 'audio/wav';
-                    if (!currCallback) throw new Error('Callback not set');
-                    worker.postMessage({
-                        command: 'exportWAV',
-                        type: type
-                    });
-                }
-                worker.onmessage = function(e) {
-                    var blob = e.data;
-                    currCallback(blob);
-                }
-                source.connect(this.node);
-                this.node.connect(out);
-         
+            }
+        }
+        this.record = function() {
+            recording = true;
+        }
+        this.stop = function() {
+            recording = false;
+        }
+        this.clear = function() {
+            worker.postMessage({
+                command: 'clear'
+            });
+        }
+        this.getBuffer = function(cb) {
+            currCallback = cb || config.callback;
+            worker.postMessage({
+                command: 'getBuffer'
+            })
+        }
+        this.exportWAV = function(cb, type) {
+            currCallback = cb || config.callback;
+            type = type || config.type || 'audio/wav';
+            if (!currCallback) throw new Error('Callback not set');
+            worker.postMessage({
+                command: 'exportWAV',
+                type: type
+            });
+        }
+        worker.onmessage = function(e) {
+            var blob = e.data;
+            currCallback(blob);
+        }
+        source.connect(this.node);
+        this.node.connect(out);
 
-                //this should not be necessary
-            };
 
-      
-
-          //  window.Record = Record;
+        //this should not be necessary
+    };
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //  window.Record = Record;
 
 
 
@@ -2012,7 +1972,6 @@ DSX.prototype.pitchShift = function(overlapRatio,pitchRatio) {
 
 
     DSX.dac = DAC = drsax.destination;
-
 
 
 
