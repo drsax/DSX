@@ -418,7 +418,7 @@
         <button class="button" onclick="stopRecording();">stop</button>
         <button class="button" onclick="stop();">delete</button>
 
-        <ul id="recordingslist"></ul>
+        <ul id="recordingsList"></ul>
     </div>
 
     <!-- recording  bitton-->
@@ -443,7 +443,7 @@
             color: black;
         }
 
-        #recordingslist {
+        #recordingsList {
             padding-left: 0%;
             background-color: black;
         }
@@ -732,7 +732,7 @@
                 li = document.createElement('li');
                 var au = document.createElement('audio');
                 hf = document.createElement('a');
-                var recordingslist = document.getElementById('recordingslist')
+                var recordingslist = document.getElementById('recordingsList');
 
                 au.controls = true;
                 au.src = URL.createObjectURL(root);
